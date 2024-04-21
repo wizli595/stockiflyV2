@@ -28,7 +28,7 @@ class CustomerController extends Controller
     public function index(CustomerDataTable $dataTable)
     {
         $customers = Customer::latest()->paginate(50);
-        return $dataTable->render('custumers.index');
+        return $dataTable->render('custumers.index',compact('customers'));
     }
 
     /**

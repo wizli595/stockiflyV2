@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\UsersDataTable;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 
@@ -24,10 +25,10 @@ class SupplierController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(UsersDataTable $dataTable)
     {
         $suppliers = Supplier::latest()->paginate(50);
-        return view('suppliers.index', compact('suppliers'));
+        return $dataTable->render("suppliers.index",compact('suppliers'));
     }
 
     /**

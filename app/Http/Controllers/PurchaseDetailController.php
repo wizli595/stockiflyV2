@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\UsersDataTable;
 use App\Models\PurchaseDetail;
 use Illuminate\Http\Request;
 
@@ -17,10 +18,10 @@ class PurchaseDetailController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(UsersDataTable $dataTable)
     {
         $purchaseDetails=PurchaseDetail::all();
-        return view("purchaseDetails.index",compact('purchaseDetails'));
+        return $dataTable->render("purchaseDetails.index",compact('purchaseDetails'));
     }
 
     /**

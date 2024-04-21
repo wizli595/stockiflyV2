@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\UsersDataTable;
 use App\Models\Werhouse;
 use Illuminate\Http\Request;
 
@@ -17,9 +18,10 @@ class WerhouseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(UsersDataTable $dataTable)
     {
-        return view("werhouses.index",compact('werhouses'));
+        $werhouses=Werhouse::all();
+        return $dataTable->render("werhouses.index",compact('werhouses'));
     }
 
     /**

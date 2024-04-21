@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\UsersDataTable;
 use App\Models\Unite;
 use Illuminate\Http\Request;
 
@@ -17,10 +18,10 @@ class UniteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(UsersDataTable $dataTable)
     {
         $unites=Unite::all();
-        return view("unites.index",compact("unites"));
+        return $dataTable->render("unites.index",compact('unites'));
     }
 
     /**

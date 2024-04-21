@@ -18,10 +18,14 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         $allPermissions = [
+            'user-list',
+            'user-create',
+            'user-edit',
+            'user-delete',
             'role-list',
             'role-create',
             'role-edit',
-            'role-delete',        
+            'role-delete',
             'customer-list',
             'customer-create',
             'customer-edit',
@@ -53,7 +57,7 @@ class AdminSeeder extends Seeder
             'purchase-list',
             'purchase-create',
             'purchase-edit',
-            'purchase-delete',        
+            'purchase-delete',
             'purchaseDetail-list',
             'purchaseDetail-create',
             'purchaseDetail-edit',

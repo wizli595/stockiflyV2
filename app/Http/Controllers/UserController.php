@@ -15,8 +15,12 @@ use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
-    public function __construct() {
-        $this->middleware(['permission:brand-create'], ['only' => ['index', 'show']]);
+    function __construct()
+    {
+        $this->middleware(['permission:user-list|user-create|user-edit|user-delete'], ['only' => ['index', 'show']]);
+        $this->middleware(['permission:user-create'], ['only' => ['create', 'store']]);
+        $this->middleware(['permission:user-edit'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:user-delete'], ['only' => ['destroy']]);
     }
 
     public function index(UsersDataTable $dataTable)
@@ -98,8 +102,8 @@ class UserController extends Controller
         return redirect()->route('users.index')
                         ->with('success','User deleted successfully');
     }
-    
-    // Role Controlling 
+
+    // Role Controlling
     public function showChangeRolesPermissions(User $user){
 
         $roles = Role::all(); // Get all roles
@@ -115,13 +119,13 @@ class UserController extends Controller
     public function updateRolesPermissions(Request $request,User $user)
     {
         // $user = User::find($id);
-        
+
         // Validate the request
         $this->validate($request, [
             'roles' => 'required|array',
             'permissions' => 'required|array',
         ]);
-        
+
         // Sync roles and permissions
         $user->syncRoles($request->roles);
         $user->syncPermissions($request->permissions);

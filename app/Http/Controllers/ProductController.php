@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\UsersDataTable;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -17,10 +18,10 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(UsersDataTable $dataTable)
     {
         $products=Product::all();
-        return view("products.index",compact("products"));
+        return $dataTable->render("products.index",compact('products'));
     }
 
     /**
