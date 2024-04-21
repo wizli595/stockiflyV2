@@ -3,6 +3,10 @@
 @if(auth()->user()->can('brand-create'))
 
 @section('content')
+    {{-- <div>
+        <livewire:user-chart/>
+    </div> --}}
+
     <div class="container">
         <div class="card">
             <div class="card-header">Manage Users</div>
