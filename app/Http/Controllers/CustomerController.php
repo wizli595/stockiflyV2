@@ -31,9 +31,9 @@ class CustomerController extends Controller
      */
     public function index(CustomerDataTable $dataTable)
     {
-        $customers = Customer::latest()->paginate(50);                      
+        $customers = Customer::latest()->paginate(50);
         // $users = $customers->pluck('user')->unique();
-        $users = User::whereIn('id', $customers->pluck('user_id'))->get();           
+        $users = User::whereIn('id', $customers->pluck('user_id'))->get();
         return $dataTable->render('customers.index',compact('customers','users'));
     }
 
@@ -58,8 +58,7 @@ class CustomerController extends Controller
         request()->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email,',
-            'password' =>'same:confirm-password',
-            'role' => 'required',
+            'password' =>'required',
             'username' =>'required',
             'phone' =>'required',
             'avatar' =>'required'
@@ -67,7 +66,7 @@ class CustomerController extends Controller
         ]);
         // Commencer une transaction pour garantir que l'utilisateur et l'adresse sont créés en même temps
         DB::beginTransaction();
-    
+
         try {
             // Créer l'utilisateur
             $user = User::create([
@@ -77,9 +76,9 @@ class CustomerController extends Controller
                 'role' => 'stock Manager',
                 'username' => $request->username,
                 'phone' => $request->phone,
-                'avatar' => $request->avatar
+                'avatar' => "jojo"
             ]);
-    
+
             // Créer l'adresse
             $adresse = Adresse::create([
                 'adresse_name' =>$request->adresse_name
@@ -89,7 +88,7 @@ class CustomerController extends Controller
             $customer->adresse_id = $adresse->id;
             $customer->save();
             dd($customer) ;
-    
+
             // Valider la transaction
             DB::commit();
 
@@ -99,7 +98,7 @@ class CustomerController extends Controller
             // En cas d'erreur, annuler la transaction
             dd($e) ;
             DB::rollback();
-    
+
             return back()->with('error', 'Error creating customer: ' . $e->getMessage());
         }
     }
