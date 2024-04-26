@@ -1,24 +1,92 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
+@section('head')
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+<script src="src/js/charts/echarts/examples/doughnut-rounded-chart.js"></script>
+@endsection
+
+@if (auth()->user()->can('brand-create'))
+
+    @section('content')
+        {{-- <div>  <livewire:user-chart/>nn</div> --}}
+
+        
+        <div class="echart-doughnut-rounded-chart" style="min-height: 320px;" data-echart-responsive="true"></div>
+
+
+
+        <div class="container">
+            <div class="card">
+                <div class="card-header">Manage Users</div>
+                <div class="card-body">
+                    {{ $dataTable->table() }}
                 </div>
             </div>
         </div>
-        <div class="p-3 max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    <livewire:user-table/>
+
+        <div class="modal fade" id="error-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">
+                <div class="modal-content position-relative">
+                    <div class="top-0 mt-2 position-absolute end-0 me-2 z-index-1">
+                        <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                            data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="p-0 modal-body">
+                        <div class="py-3 rounded-top-lg ps-4 pe-6 bg-light">
+                            <h4 class="mb-1" id="modalExampleDemoLabel">Add User </h4>
+                        </div>
+
+                        <div class="p-4 pb-0">
+                            <form action="{{ route('users.store') }}" method="POST">
+                                @csrf
+
+                                <div class="mb-3">
+                                    <label class="col-form-label" for="name">Name </label>
+                                    <input class="form-control" name="name" id="name" type="text" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="col-form-label"for="username">User Name
+                                    </label>
+                                    <input class="form-control" name="username" id="username" type="text" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="col-form-label" for="phone"> Phone </label>
+                                    <input class="form-control" name="phone" id="phone" type="tel" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="col-form-label" for="email">Email </label>
+                                    <input class="form-control" name="email" id="email" type="email" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="col-form-label" for="password">Password </label>
+                                    <input class="form-control" name="password" id="password" type="password" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="adresse">Adresse</label><br>
+                                    <textarea id="adresse" name='adresse' rows="3" cols="30"></textarea>
+                                </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit">Create</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</x-app-layout>
+
+    @endsection
+@endif
+
+@push('scripts')
+    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+@endpush

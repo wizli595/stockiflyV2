@@ -16,7 +16,7 @@ class CustomerDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
-     *
+     * 
      * @param QueryBuilder $query Results from query() method.
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable

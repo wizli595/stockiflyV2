@@ -12,7 +12,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -20,13 +19,12 @@ return new class extends Migration
             $table->string('role');
             $table->string('username')->nullable();
             $table->string('phone')->nullable();
-            $table->string('adresse')->nullable();
             $table->string('avatar')->default('/uploads/avatar.png');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-        });
+        }); 
     }
 
     /**

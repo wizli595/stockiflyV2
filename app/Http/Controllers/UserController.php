@@ -42,14 +42,17 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
-            'roles' => 'required'
+            'role' => 'required',            
+            'username' =>'required',
+            'phone' =>'required',
+            'avatar' =>'required'
         ]);
 
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
 
         $user = User::create($input);
-        $user->assignRole($request->input('roles'));
+        $user->assignRole($request->input('role'));
 
         return redirect()->route('users.index')
                         ->with('success','User created successfully');
@@ -76,7 +79,10 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'same:confirm-password',
-            'roles' => 'required'
+            'role' => 'required',
+            'username' =>'required',
+            'phone' =>'required',
+            'avatar' =>'required'
         ]);
 
         $input = $request->all();
@@ -90,7 +96,7 @@ class UserController extends Controller
         $user->update($input);
         DB::table('model_has_roles')->where('model_id',$id)->delete();
 
-        $user->assignRole($request->input('roles'));
+        $user->assignRole($request->input('role'));
 
         return redirect()->route('users.index')
                         ->with('success','User updated successfully');

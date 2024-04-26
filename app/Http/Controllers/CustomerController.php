@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\CustomerDataTable;
+use App\Models\Adresse;
 use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
@@ -27,8 +31,10 @@ class CustomerController extends Controller
      */
     public function index(CustomerDataTable $dataTable)
     {
-        $customers = Customer::latest()->paginate(50);
-        return $dataTable->render('custumers.index',compact('customers'));
+        $customers = Customer::latest()->paginate(50);                      
+        // $users = $customers->pluck('user')->unique();
+        $users = User::whereIn('id', $customers->pluck('user_id'))->get();           
+        return $dataTable->render('customers.index',compact('customers','users'));
     }
 
     /**
@@ -38,7 +44,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('customers.create');
+        return view("customers.create");
     }
 
     /**
@@ -50,23 +56,53 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         request()->validate([
-            "customer_name" => "required",
-            "customer_email" => "required",
-            "customer_phone" => "required",
-            "customer_adresse" => "required",
-            "customer_shop_name" => "required",
-            "customer_type" => "required",
-            "customer_bank_name" => "required",
-            "customer_account_holder" => "required",
-            "customer_account_number" => "required",
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,',
+            'password' =>'same:confirm-password',
+            'role' => 'required',
+            'username' =>'required',
+            'phone' =>'required',
+            'avatar' =>'required'
+
         ]);
+        // Commencer une transaction pour garantir que l'utilisateur et l'adresse sont créés en même temps
+        DB::beginTransaction();
+    
+        try {
+            // Créer l'utilisateur
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'role' => 'stock Manager',
+                'username' => $request->username,
+                'phone' => $request->phone,
+                'avatar' => $request->avatar
+            ]);
+    
+            // Créer l'adresse
+            $adresse = Adresse::create([
+                'adresse_name' =>$request->adresse_name
+            ]);
+            $customer = new Customer();
+            $customer->user_id = $user->id;
+            $customer->adresse_id = $adresse->id;
+            $customer->save();
+            dd($customer) ;
+    
+            // Valider la transaction
+            DB::commit();
 
-        Customer::create($request->all());
 
-        return redirect()->route('customers.index')
-            ->with('success', 'customer created successfully.');
+            return redirect()->route('customers.index')->with('success', 'Customer created successfully!');
+        } catch (\Exception $e) {
+            // En cas d'erreur, annuler la transaction
+            dd($e) ;
+            DB::rollback();
+    
+            return back()->with('error', 'Error creating customer: ' . $e->getMessage());
+        }
     }
-
     /**
      * Display the specified resource.
      *
@@ -97,24 +133,51 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Customer $customer)
-    {
-        request()->validate([
-            "customer_name" => "required",
-            "customer_email" => "required",
-            "customer_phone" => "required",
-            "customer_adresse" => "required",
-            "customer_shop_name" => "required",
-            "customer_type" => "required",
-            "customer_bank_name" => "required",
-            "customer_account_holder" => "required",
-            "customer_account_number" => "required",
+{
+    // Valider les données de la requête
+    $request->validate([
+        'name' => 'required',
+        'email' => 'required|email|unique:users,email,' . $customer->user->id,
+        'password' => 'same:confirm-password',
+        'role' => 'required',
+        'username' => 'required',
+        'phone' => 'required',
+        'avatar' => 'required',
+        'adresse_name' => 'required'
+    ]);
+
+    // Commencer une transaction pour garantir que les mises à jour sont effectuées de manière cohérente
+    DB::beginTransaction();
+
+    try {
+        // Mettre à jour les données de l'utilisateur associé au client
+        $customer->user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => $request->role,
+            'username' => $request->username,
+            'phone' => $request->phone,
+            'avatar' => $request->avatar
         ]);
 
-        $customer->update($request->all());
+        // Mettre à jour l'adresse associée au client
+        $customer->adresse->update([
+            'adresse_name' => $request->adresse_name
+        ]);
 
-        return redirect()->route('customers.index')
-            ->with('success', 'customer updated successfully');
+        // Valider la transaction
+        DB::commit();
+
+        return redirect()->route('customers.index')->with('success', 'Customer updated successfully!');
+    } catch (\Exception $e) {
+        // En cas d'erreur, annuler la transaction
+        DB::rollback();
+
+        return back()->with('error', 'Error updating customer: ' . $e->getMessage());
     }
+}
+
 
     /**
      * Remove the specified resource from storage.

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\UsersDataTable;
 use App\Models\Supplier;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -28,9 +29,9 @@ class SupplierController extends Controller
     public function index(UsersDataTable $dataTable)
     {
         $suppliers = Supplier::latest()->paginate(50);
-        return $dataTable->render("suppliers.index",compact('suppliers'));
+        $users = User::whereIn('id', $suppliers->pluck('user_id'))->get();
+        return $dataTable->render("suppliers.index",compact('suppliers','users'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -48,24 +49,44 @@ class SupplierController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        request()->validate([
-            "supplier_name" => "required",
-            "supplier_email" => "required",
-            "supplier_phone" => "required",
-            "supplier_adresse" => "required",
-            "supplier_shop_name" => "required",
-            "supplier_type" => "required",
-            "supplier_bank_name" => "required",
-            "supplier_account_holder" => "required",
-            "supplier_account_number" => "required",
+{
+    // Valider les données de la requête
+    $request->validate([
+        'supplier_shop_name' => 'required',
+        'name' => 'required',
+        'email' => 'required|email|unique:users,email',
+        'password' =>'required|confirmed',
+        'role' => 'required',
+        'username' =>'required',
+        'phone' =>'required',
+        'avatar' =>'required',
+    ]);
+
+    try {
+        // Créer l'utilisateur
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => $request->role,
+            'username' => $request->username,
+            'phone' => $request->phone,
+            'avatar' => $request->avatar
         ]);
 
-        Supplier::create($request->all());
+        // Créer le fournisseur associé à l'utilisateur
+        $supplier = new Supplier();
+        $supplier->user_id = $user->id;
+        $supplier->supplier_shop_name = $request->supplier_shop_name;
+        $supplier->save();
 
-        return redirect()->route('suppliers.index')
-            ->with('success', 'supplier created successfully.');
+        return redirect()->route('suppliers.index')->with('success', 'Supplier created successfully!');
+    } catch (\Exception $e) {
+        // En cas d'erreur, renvoyer à la page précédente avec un message d'erreur
+        return back()->with('error', 'Error creating supplier: ' . $e->getMessage());
     }
+}
+
 
     /**
      * Display the specified resource.
@@ -97,24 +118,39 @@ class SupplierController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Supplier $supplier)
-    {
-        request()->validate([
-            "supplier_name" => "required",
-            "supplier_email" => "required",
-            "supplier_phone" => "required",
-            "supplier_adresse" => "required",
-            "supplier_shop_name" => "required",
-            "supplier_type" => "required",
-            "supplier_bank_name" => "required",
-            "supplier_account_holder" => "required",
-            "supplier_account_number" => "required",
+{
+    // Valider les données de la requête
+    $request->validate([
+        'supplier_shop_name' => 'required',
+        'name' => 'required',
+        'email' => 'required|email|unique:users,email,' . $supplier->user->id,
+        'role' => 'required',
+        'username' => 'required',
+        'phone' => 'required',
+        'avatar' => 'required',
+    ]);
+
+    try {
+        $supplier->user()->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'username' => $request->username,
+            'phone' => $request->phone,
+            'avatar' => $request->avatar
         ]);
 
-        $supplier->update($request->all());
-
-        return redirect()->route('suppliers.index')
-            ->with('success', 'supplier updated successfully');
+        // Mettre à jour les autres champs du fournisseur
+        $supplier->update([
+            'supplier_shop_name' => $request->supplier_shop_name,
+        ]);
+        return redirect()->route('suppliers.index')->with('success', 'Supplier updated successfully!');
+    } catch (\Exception $e) {
+        // En cas d'erreur, renvoyer à la page précédente avec un message d'erreur
+        return back()->with('error', 'Error updating supplier: ' . $e->getMessage());
     }
+}
+
 
     /**
      * Remove the specified resource from storage.

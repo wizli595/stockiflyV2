@@ -1,10 +1,19 @@
 <?php
 
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\dashboard\DashboardController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\PurchaseDetailController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UniteController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WerhouseController;
+use App\Models\PurchaseDetail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -24,14 +33,18 @@ Route::get('/', function () {
     return redirect('/login') ;
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard'); 
 
 Route::middleware('auth')->group(function () {
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/dashboard', [DashboardController::class ,'index'])->middleware(['auth', 'verified'])->name('dashboard');
+    
 
     // Our resource routes
     Route::resource('roles', RoleController::class);
@@ -41,10 +54,18 @@ Route::middleware('auth')->group(function () {
     Route::resource('suppliers', SupplierController::class);
     Route::get('users/{user}/change_roles_permissions', [UserController::class, 'showChangeRolesPermissions'])->name('users.change_roles_permissions');
     Route::post('users/{user}/update_roles_permissions', [UserController::class, 'updateRolesPermissions'])->name('users.update_roles_permissions');
+
+    Route::resource('categories', CategorieController::class);
+    Route::resource('products', ProductController::class);
+    Route::resource('purchases', PurchaseController::class);
+    Route::resource('brands', BrandController::class);
+    Route::resource('werhouses', WerhouseController::class);
+    Route::resource('unites', UniteController::class);
+
+
 });
 
 require __DIR__.'/auth.php';
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
