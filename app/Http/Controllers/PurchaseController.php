@@ -15,7 +15,7 @@ class PurchaseController extends Controller
         $this->middleware(['permission:purchase-edit'], ['only' => ['edit', 'update']]);
         $this->middleware(['permission:purchase-delete'], ['only' => ['destroy']]);
     }
-    /**
+    /** 
      * Display a listing of the resource.
      */
     public function index(UsersDataTable $dataTable)

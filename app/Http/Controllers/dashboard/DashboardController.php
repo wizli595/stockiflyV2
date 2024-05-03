@@ -9,15 +9,11 @@ use App\Models\User;
 
 class DashboardController extends Controller
 {
-    public function index(UsersDataTable $dataTable)
+    public function index(UsersDataTable $usersDataTable )
     {
-        // $data = [
-        //     'users_count' => User::count(),
-        //     // Add other models 
-        // ];
-        // return view('dashboard', compact('data'));
-
-        return $dataTable->render("users.index");
+        $users_count = User::count() ;
+        
+        return $usersDataTable->render("dashboard", compact('users_count')); 
 
     }
 }

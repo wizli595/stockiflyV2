@@ -21,7 +21,7 @@ class BrandController extends Controller
     public function index(UsersDataTable $dataTable)
     {
         $brands=Brand::all();
-        return $dataTable->render("brands.index",compact('brands'));
+        return $dataTable->render("brands.index",compact('brands')); 
     }
 
     /**

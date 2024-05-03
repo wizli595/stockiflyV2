@@ -6,7 +6,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col">
-                        <h5 class="mb-2">menu.customers</h5>
+                        <h5 class="mb-2"> Brands </h5>
                     </div>
                 </div>
             </div>
@@ -15,7 +15,7 @@
                     <div class="flex-1">
                         <p>
                             <a href="{{ route('dashboard') }}">menu.dashboard</a>
-                            - menu.parties - menu.customers
+                            - products_manager - brands
                         </p>
                     </div>
                 </div>
@@ -27,78 +27,63 @@
 
         <div class="card">
             <div class="card-header">
+                
                 <div class="row">
                     <div class="col">
                         <h5 class="mb-2">
-                            Manage Customers
+                            Manage Brands
                         </h5>
                     </div>
 
                     <div class="col-auto d-none d-sm-block">
                         <h6 class="text-uppercase text-600">
-                            <!-- Add Customer Buuton -->
+                            <!-- Add Brands Buuton -->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#editModal">Add
+                                data-bs-target="#addtModal"> Add 
                             </button>
-                            </span>
+       
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showModal">
+                                Show Brands
+                            </button>
                         </h6>
                     </div>
+                    
                 </div>
 
             </div>
+            
             <div class="card-body">
                 {{ $dataTable->table() }}
             </div>
+            
         </div>
 
 
 
-        <!-- Add Customer  modal -->
-        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <!-- Add Brand  modal -->
+        <div class="modal fade" id="addtModal" tabindex="-1" aria-labelledby="addtModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Add Customer </h5>
+                        <h5 class="modal-title" id="addtModalLabel">Add Brand </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="#" method="POST">
+                        <form action="{{ route('brands.store') }}" method="POST">
                             @csrf
 
-                            <div class="mb-3">
-                                <label class="col-form-label" for="name">Name </label>
-                                <input class="form-control" name="name" id="name" type="text" />
+                            <div class="form-group ">
+                                <label for="brand_name">Name Brand:</label>
+                                <input type="text" class="form-control" id="brand_name" name="brand_name">
                             </div>
 
-                            <div class="mb-3">
-                                <label class="col-form-label"for="username">User Name
-                                </label>
-                                <input class="form-control" name="username" id="username" type="text" />
-                            </div>
+                            <button class="btn btn-secondary pt-16" type="button" data-bs-dismiss="modal">Close</button>
+                            <button class="btn btn-primary pt-16 " type="submit">Add</button>
+                        
+                        </form>
 
-                            <div class="mb-3">
-                                <label class="col-form-label" for="phone"> Phone </label>
-                                <input class="form-control" name="phone" id="phone" type="tel" />
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="col-form-label" for="email">Email </label>
-                                <input class="form-control" name="email" id="email" type="email" />
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="adresse">Adresse</label><br>
-                                <textarea id="adresse" name='adresse' rows="3" cols="30"></textarea>
-                            </div>
                     </div>
                 </div>
-
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" type="submit">Add</button>
-                    </form>
-                </div>
-
             </div>
         </div>
 
@@ -116,31 +101,11 @@
                             @csrf
                             @method('PUT')
 
-                            <div class="mb-3">
-                                <label class="col-form-label" for="name">Name </label>
-                                <input class="form-control" name="name" id="name" type="text" />
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="col-form-label"for="username">User Name
-                                </label>
-                                <input class="form-control" name="username" id="username" type="text" />
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="col-form-label" for="phone"> Phone </label>
-                                <input class="form-control" name="phone" id="phone" type="tel" />
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="col-form-label" for="email">Email </label>
-                                <input class="form-control" name="email" id="email" type="email" />
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="adresse">Adresse</label><br>
-                                <textarea id="adresse" name='adresse' rows="3" cols="30"></textarea>
-                            </div>
+                           <div class="form-group">
+                               <label for="brand_name">Name Brand:</label>
+                               <input type="text" class="form-control" id="brand_name" name="brand_name">
+                           </div>
+ 
                     </div>
                 </div>
 
@@ -154,44 +119,24 @@
         </div>
          -->
 
-        <!-- Show  modal
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showModal">Show</button>
+        {{-- Show  modal --}}
         <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="showModalLabel">Update Customer </h5>
+                        <h5 class="modal-title" id="showModalLabel"> Brands </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="mb-3 card">
-                            <div class="card-header">
+
                                 <div class="row">
                                     <div class="col">
-                                        <h5 class="mb-2">
-                                            User Name (<a href="mailto:ExemplesMail@gmail.com">ExemplesMail@gmail.com</a>)
-                                        </h5>
-                                        <a class="dropdown-item" href="#">Edit</a>
-                                        <a class="dropdown-item text-danger" href="#">Delete user</a>
+                                        <h4 >
+                                            {{-- {{ $brands->brand_name }}  --}}
+                                        </h4>
                                     </div>
-                                    <div class="col-auto d-none d-sm-block">
-                                        <h6 class="text-uppercase text-600">Customer<span class="fas fa-user ms-2"></span>
-                                        </h6>
-                                    </div>
+    
                                 </div>
-                            </div>
-
-                            <div class="card-body border-top">
-                                <div class="d-flex"><span class="fas fa-user text-success me-2"
-                                        data-fa-transform="down-5"></span>
-                                    <div class="flex-1">
-                                        <p class="mb-0">Customer was created</p>
-                                        <p class="mb-0 fs--1 text-600">
-                                            {{-- {{ $customers->created_at }} --}} 2024-12-25...
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
 
                         </div>
                     </div>
@@ -199,7 +144,9 @@
 
             </div>
         </div>
-         -->
+
+
+
     @endsection
 
     @push('scripts')

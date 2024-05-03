@@ -1,12 +1,12 @@
 <x-app-layout>
 
-    @section('content')
-        <!-- Head content -->
+    @section('content') 
+        <!-- Head content --> 
         <div class="mb-3 card">
             <div class="card-header">
                 <div class="row">
                     <div class="col">
-                        <h5 class="mb-2">menu.customers</h5>
+                        <h5 class="mb-2">menu.werhouses</h5>
                     </div>
                 </div>
             </div>
@@ -15,7 +15,7 @@
                     <div class="flex-1">
                         <p>
                             <a href="{{ route('dashboard') }}">menu.dashboard</a>
-                            - menu.parties - menu.customers
+                            - menu.parties - menu.werhouses
                         </p>
                     </div>
                 </div>
@@ -30,13 +30,13 @@
                 <div class="row">
                     <div class="col">
                         <h5 class="mb-2">
-                            Manage Customers
+                            Manage werhouses
                         </h5>
                     </div>
 
                     <div class="col-auto d-none d-sm-block">
                         <h6 class="text-uppercase text-600">
-                            <!-- Add Customer Buuton -->
+                            <!-- Add Werhouses Buuton -->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#editModal">Add
                             </button>
@@ -53,43 +53,31 @@
 
 
 
-        <!-- Add Customer  modal -->
+        <!-- Add Werhouses  modal -->
         <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Add Customer </h5>
+                        <h5 class="modal-title" id="editModalLabel">Add Werhouses </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="#" method="POST">
+                        <form action="{{ route('werhouses.store') }}" method="POST">
                             @csrf
 
-                            <div class="mb-3">
-                                <label class="col-form-label" for="name">Name </label>
-                                <input class="form-control" name="name" id="name" type="text" />
+                            <div class="form-group">
+                                <label for="werhouse_name">Werhouse Name:</label>
+                                <input type="text" class="form-control" id="werhouse_name" name="werhouse_name">
+                            </div>
+                            <div class="form-group">
+                                <label for="werhouse_adresse">Werhouse adresse:</label>
+                                <input type="text" class="form-control" id="werhouse_adresse" name="werhouse_adresse">
+                            </div>
+                            <div class="form-group">
+                                <label for="werhouse_capacity">Werhouse capacity:</label>
+                                <input type="number" class="form-control" id="werhouse_capacity" name="werhouse_capacity">
                             </div>
 
-                            <div class="mb-3">
-                                <label class="col-form-label"for="username">User Name
-                                </label>
-                                <input class="form-control" name="username" id="username" type="text" />
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="col-form-label" for="phone"> Phone </label>
-                                <input class="form-control" name="phone" id="phone" type="tel" />
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="col-form-label" for="email">Email </label>
-                                <input class="form-control" name="email" id="email" type="email" />
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="adresse">Adresse</label><br>
-                                <textarea id="adresse" name='adresse' rows="3" cols="30"></textarea>
-                            </div>
                     </div>
                 </div>
 
@@ -108,7 +96,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Update Customer </h5>
+                        <h5 class="modal-title" id="editModalLabel">Update Werhouses </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -160,7 +148,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="showModalLabel">Update Customer </h5>
+                        <h5 class="modal-title" id="showModalLabel">Update Werhouses </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -175,7 +163,7 @@
                                         <a class="dropdown-item text-danger" href="#">Delete user</a>
                                     </div>
                                     <div class="col-auto d-none d-sm-block">
-                                        <h6 class="text-uppercase text-600">Customer<span class="fas fa-user ms-2"></span>
+                                        <h6 class="text-uppercase text-600">Werhouses<span class="fas fa-user ms-2"></span>
                                         </h6>
                                     </div>
                                 </div>
@@ -185,9 +173,9 @@
                                 <div class="d-flex"><span class="fas fa-user text-success me-2"
                                         data-fa-transform="down-5"></span>
                                     <div class="flex-1">
-                                        <p class="mb-0">Customer was created</p>
+                                        <p class="mb-0">Werhouses was created</p>
                                         <p class="mb-0 fs--1 text-600">
-                                            {{-- {{ $customers->created_at }} --}} 2024-12-25...
+                                            {{-- {{ $werhouses->created_at }} --}} 2024-12-25...
                                         </p>
                                     </div>
                                 </div>

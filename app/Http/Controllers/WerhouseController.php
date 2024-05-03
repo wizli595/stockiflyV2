@@ -29,12 +29,12 @@ class WerhouseController extends Controller
      */
     public function create()
     {
-        return view("werhouses.create");
+        return view("werhouses.create"); 
     }
 
     /**
      * Store a newly created resource in storage.
-     */
+     */ 
     public function store(Request $request)
     {
         request()->validate([

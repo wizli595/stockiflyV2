@@ -15,7 +15,7 @@ class ProductController extends Controller
         $this->middleware(['permission:product-edit'], ['only' => ['edit', 'update']]);
         $this->middleware(['permission:product-delete'], ['only' => ['destroy']]);
     }
-    /**
+    /** 
      * Display a listing of the resource.
      */
     public function index(UsersDataTable $dataTable)
@@ -87,7 +87,7 @@ class ProductController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     */
+    */
     public function destroy(Product $product)
     {
         $product->delete();

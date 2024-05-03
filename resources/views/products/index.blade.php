@@ -9,7 +9,7 @@
                         <h5 class="mb-2">menu.product</h5>
                     </div>
                 </div>
-            </div>
+            </div> 
             <div class="card-body border-top">
                 <div class="d-flex">
                     <div class="flex-1">
@@ -30,7 +30,7 @@
                 <div class="row">
                     <div class="col">
                         <h5 class="mb-2">
-                            Manage Customers
+                            Manage products
                         </h5>
                     </div>
 
@@ -62,34 +62,35 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="#" method="POST">
+                        <form action="{{ route('products.store') }}" method="POST">
                             @csrf
 
                             <div class="mb-3">
                                 <label class="col-form-label" for="name">Name </label>
-                                <input class="form-control" name="name" id="name" type="text" />
+                                <input class="form-control" name="product_name" id="name" type="text" />
                             </div>
 
                             <div class="mb-3">
-                                <label class="col-form-label"for="username">User Name
+                                <label class="col-form-label"for="product_code"><Param></Param>Product code
                                 </label>
-                                <input class="form-control" name="username" id="username" type="text" />
+                                <input class="form-control" name="product_code" id="product_code" type="number" />
                             </div>
 
                             <div class="mb-3">
-                                <label class="col-form-label" for="phone"> Phone </label>
-                                <input class="form-control" name="phone" id="phone" type="tel" />
+                                <label class="col-form-label" for="buying_price"> Buying price </label>
+                                <input class="form-control" name="buying_price" id="buying_price" type="number" />
                             </div>
 
                             <div class="mb-3">
-                                <label class="col-form-label" for="email">Email </label>
-                                <input class="form-control" name="email" id="email" type="email" />
+                                <label class="col-form-label" for="selling_price"> Selling price </label>
+                                <input class="form-control" name="selling_price" id="selling_price" type="number" />
                             </div>
 
                             <div class="mb-3">
-                                <label for="adresse">Adresse</label><br>
-                                <textarea id="adresse" name='adresse' rows="3" cols="30"></textarea>
+                                <label class="col-form-label" for="stock"> Stock </label>
+                                <input class="form-control" name="stock" id="stock" type="number" />
                             </div>
+
                     </div>
                 </div>
 
@@ -112,7 +113,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="#" method="POST">
+                        {{-- <form action="{{route('products.update')}}" method="POST"> --}}
                             {{-- @csrf --}}
                             {{-- @method('PUT') --}}
 
@@ -187,7 +188,7 @@
                                     <div class="flex-1">
                                         <p class="mb-0">Customer was created</p>
                                         <p class="mb-0 fs--1 text-600">
-                                            {{-- {{ $customers->created_at }} --}} 2024-12-25...
+                                            {{-- {{ $products->created_at }} --}} 2024-12-25...
                                         </p>
                                     </div>
                                 </div>

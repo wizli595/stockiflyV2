@@ -6,7 +6,7 @@ use App\DataTables\UsersDataTable;
 use App\Models\Unite;
 use Illuminate\Http\Request;
 
-class UniteController extends Controller
+class UniteController extends Controller 
 {
     function __construct()
     {
@@ -39,8 +39,8 @@ class UniteController extends Controller
     {
         request()->validate([
             "unite_name" =>"required",
-
         ]);
+        
         Unite::create($request->all());
         return redirect()->route("unites.index")->with("success","unite create");
     }

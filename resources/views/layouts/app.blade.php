@@ -410,6 +410,7 @@
     <script src="{{ asset('assets/js/theme.js') }}"></script>
 
     <script src="{{ asset('assets/js/echarts-example.js') }}"></script>
+    <script src=" {{ asset('vendors/chart/chart.min.js') }} "></script>
 
     @stack('scripts')
 

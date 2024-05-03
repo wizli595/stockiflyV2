@@ -1,18 +1,37 @@
 @extends('layouts.app')
 
 @section('head')
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
-<script src="src/js/charts/echarts/examples/doughnut-rounded-chart.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
 @endsection
 
 @if (auth()->user()->can('brand-create'))
 
     @section('content')
-        {{-- <div>  <livewire:user-chart/>nn</div> --}}
-
+        {{-- <div>  <livewire:user-chart/> </div> --}}
         
-        <div class="echart-doughnut-rounded-chart" style="min-height: 320px;" data-echart-responsive="true"></div>
+        <div class="mb-3 card">
+            <div class="card-header row">
+                <div class="col">
+                    Charts
+                </div>
+                <div class="col">
+                    Users count : {{ $users_count }}
+                </div>
+            </div> 
+            <div class="card-body border-top row ">
+                <div class="col">
+                    <div class="echart-doughnut-rounded-chart" style="min-height: 320px;" data-echart-responsive="true"></div>
+                </div>
+                <div class="col">
+                    <div class="echart-doughnut-rounded-chart" style="min-height: 320px;" data-echart-responsive="true"></div>
+                </div>
+                <div class="col">
+                    <div class="echart-doughnut-rounded-chart" style="min-height: 320px;" data-echart-responsive="true"></div>
+                </div>
+
+            </div>
+        </div>
 
 
 
@@ -72,19 +91,16 @@
                                     <label for="adresse">Adresse</label><br>
                                     <textarea id="adresse" name='adresse' rows="3" cols="30"></textarea>
                                 </div>
-
+                                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                                <button class="btn btn-primary" type="submit">Create</button>
+                            </form>
+                            
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" type="submit">Create</button>
-                        </form>
                     </div>
                 </div>
             </div>
-        </div>
+        @endsection
 
-    @endsection
 @endif
 
 @push('scripts')

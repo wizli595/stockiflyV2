@@ -61,8 +61,6 @@ class CustomerController extends Controller
             'password' =>'required',
             'username' =>'required',
             'phone' =>'required',
-            'avatar' =>'required'
-
         ]);
         // Commencer une transaction pour garantir que l'utilisateur et l'adresse sont créés en même temps
         DB::beginTransaction();
@@ -73,7 +71,7 @@ class CustomerController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
-                'role' => 'stock Manager',
+                'role' => 'stock manager',
                 'username' => $request->username,
                 'phone' => $request->phone,
                 'avatar' => "jojo"
@@ -87,7 +85,6 @@ class CustomerController extends Controller
             $customer->user_id = $user->id;
             $customer->adresse_id = $adresse->id;
             $customer->save();
-            dd($customer) ;
 
             // Valider la transaction
             DB::commit();
