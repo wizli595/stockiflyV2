@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\CategorieDataTable;
 use App\DataTables\UsersDataTable;
 use App\Models\Categorie;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class CategorieController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(UsersDataTable $dataTable)
+    public function index(CategorieDataTable $dataTable)
     {
         $categories = Categorie::latest()->paginate(50);
         return $dataTable->render("categories.index",compact('categories'));

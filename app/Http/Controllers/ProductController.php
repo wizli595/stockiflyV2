@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\ProductDataTable;
 use App\DataTables\UsersDataTable;
+use App\Models\Brand;
+use App\Models\Categorie;
 use App\Models\Product;
+use App\Models\Unite;
+use App\Models\Werhouse;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -18,10 +23,15 @@ class ProductController extends Controller
     /** 
      * Display a listing of the resource.
      */
-    public function index(UsersDataTable $dataTable)
+    public function index(ProductDataTable $dataTable)
     {
         $products=Product::all();
-        return $dataTable->render("products.index",compact('products'));
+        $categories=Categorie::all();
+        $werhouses=Werhouse::all();
+        $brands=Brand::all();
+        $unites=Unite::all();
+        
+        return $dataTable->render("products.index",compact('products','categories','werhouses','brands','unites'));
     }
 
     /**
@@ -44,6 +54,10 @@ class ProductController extends Controller
             "selling_price" =>"required",
             "stock" =>"required",
             "product_image" =>"required",
+            "categorie_id" =>"required",
+            "werhouse_id" =>"required",
+            "brand_id" =>"required",
+            "unite_id" =>"required",
 
         ]);
         Product::create($request->all());
@@ -78,6 +92,10 @@ class ProductController extends Controller
             "selling_price" =>"required",
             "stock" =>"required",
             "product_image" =>"required",
+            "categorie_id" =>"required",
+            "werhouse_id" =>"required",
+            "brand_id" =>"required",
+            "unite_id" =>"required",
 
         ]);
         $product->update($request->all());

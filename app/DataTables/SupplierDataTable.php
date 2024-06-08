@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class SupplierDataTable extends DataTable
+class SupplierDataTable extends DataTable 
 {
     /**
      * Build the DataTable class.
@@ -22,8 +22,65 @@ class SupplierDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'supplier.action')
-            ->setRowId('id');
+        ->addColumn('action', function ($supplier) {
+            $supplierId = $supplier->id;
+            $supplierEmail = $supplier->user->email ;
+            $showsupplierCreatedAt = $supplier->created_at;
+
+            return '
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showModal-'.$supplierId.'">Show</button>
+
+                <div class="modal fade" id="showModal-'.$supplierId.'" tabindex="-1" aria-labelledby="showModalLabel-'.$supplierId.'" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="showModalLabel-'.$supplierId.'">Show supplier </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3 card">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="mb-2">
+                                                    supplier Name :   '. $supplier->user->name .'
+                                                </h5>
+                                                <h5 class="mb-2">
+                                                    Email (<a href="mailto:'. $supplierEmail .'">'. $supplierEmail .'</a>)
+                                                </h5>
+                                                <h5 class="mb-2">
+                                                    Phone : '. $supplier->user->phone.'
+                                                </h5>
+                                                
+                                                
+                                            </div>
+                                            <div class="col-auto d-none d-sm-block">
+                                                <h6 class="text-uppercase text-600">supplier<span class="fas fa-supplier ms-2"></span>
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <div class="card-body border-top">
+                                        <div class="d-flex"><span class="fas fa-supplier text-success me-2" data-fa-transform="down-5"></span>
+                                            <div class="flex-1">
+                                                <p class="mb-0">supplier was created</p>
+                                                <p class="mb-0 fs--1 text-600">
+                                                   '. $showsupplierCreatedAt .'
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+                ';
+        })
+        ->setRowId('id');
     }
 
     /**
@@ -68,7 +125,6 @@ class SupplierDataTable extends DataTable
                   ->width(60)
                   ->addClass('text-center'),
             Column::make('id'),
-            Column::make('add your columns'),
             Column::make('created_at'),
             Column::make('updated_at'),
         ];

@@ -77,14 +77,10 @@
                                 <label for="werhouse_capacity">Werhouse capacity:</label>
                                 <input type="number" class="form-control" id="werhouse_capacity" name="werhouse_capacity">
                             </div>
+                            <button class="btn btn-primary" type="submit">Add</button>
+                        </form>
 
                     </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" type="submit">Add</button>
-                    </form>
                 </div>
 
             </div>

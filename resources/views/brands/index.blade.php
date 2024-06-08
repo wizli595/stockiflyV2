@@ -41,10 +41,6 @@
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#addtModal"> Add 
                             </button>
-       
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showModal">
-                                Show Brands
-                            </button>
                         </h6>
                     </div>
                     

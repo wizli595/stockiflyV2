@@ -22,7 +22,64 @@ class CustomerDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'customer.action')
+        ->addColumn('action', function ($customer) {
+            $customerId = $customer->id;
+            $customerEmail = $customer->user->email;
+            $showcustomerCreatedAt = $customer->created_at;
+
+            return '
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showModal-'.$customerId.'">Show</button>
+
+                <div class="modal fade" id="showModal-'.$customerId.'" tabindex="-1" aria-labelledby="showModalLabel-'.$customerId.'" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="showModalLabel-'.$customerId.'">Show customer </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3 card">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="mb-2">
+                                                    customer Name :   '. $customer->user->name .'
+                                                </h5>
+                                                <h5 class="mb-2">
+                                                    Email (<a href="mailto:'. $customerEmail .'">'. $customerEmail .'</a>)
+                                                </h5>
+                                                <h5 class="mb-2">
+                                                    Phone : '. $customer->user->phone.'
+                                                </h5>
+                                                
+                                                
+                                            </div>
+                                            <div class="col-auto d-none d-sm-block">
+                                                <h6 class="text-uppercase text-600">customer<span class="fas fa-customer ms-2"></span>
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <div class="card-body border-top">
+                                        <div class="d-flex"><span class="fas fa-customer text-success me-2" data-fa-transform="down-5"></span>
+                                            <div class="flex-1">
+                                                <p class="mb-0">customer was created</p>
+                                                <p class="mb-0 fs--1 text-600">
+                                                   '. $showcustomerCreatedAt .'
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+                ';
+        }) 
             ->setRowId('id');
     }
 
@@ -52,7 +109,7 @@ class CustomerDataTable extends DataTable
                         Button::make('pdf'),
                         Button::make('print'),
                         Button::make('reset'),
-                        Button::make('reload')
+                        Button::make('reload') 
                     ]);
     }
 
@@ -68,7 +125,6 @@ class CustomerDataTable extends DataTable
                   ->width(60)
                   ->addClass('text-center'),
             Column::make('id'),
-            Column::make('add your columns'),
             Column::make('created_at'),
             Column::make('updated_at'),
         ];

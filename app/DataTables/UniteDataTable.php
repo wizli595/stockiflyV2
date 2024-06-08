@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class UniteDataTable extends DataTable
+class UniteDataTable extends DataTable 
 {
     /**
      * Build the DataTable class.
@@ -22,8 +22,57 @@ class UniteDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'unite.action')
-            ->setRowId('id');
+        ->addColumn('action', function ($unit) {
+            $unitId = $unit->id;
+            $unitName = $unit->unit_name;
+            $showunitCreatedAt = $unit->created_at; 
+
+            return '
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showModal-'.$unitId.'">Show</button>
+
+                <div class="modal fade" id="showModal-'.$unitId.'" tabindex="-1" aria-labelledby="showModalLabel-'.$unitId.'" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="showModalLabel-'.$unitId.'">Show unit </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3 card">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="mb-2">
+                                                    unit Name :   '. $unitName .'
+                                                </h5>
+                                                
+                                            </div>
+                                            <div class="col-auto d-none d-sm-block">
+                                                <h6 class="text-uppercase text-600">unit<span class="fas fa-unit ms-2"></span>
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <div class="card-body border-top">
+                                        <div class="d-flex"><span class="fas fa-unit text-success me-2" data-fa-transform="down-5"></span>
+                                            <div class="flex-1">
+                                                <p class="mb-0">unit was created</p>
+                                                <p class="mb-0 fs--1 text-600">
+                                                   '. $showunitCreatedAt .'
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+                ';
+        })  ->setRowId('id');
     }
 
     /**
@@ -68,7 +117,7 @@ class UniteDataTable extends DataTable
                   ->width(60)
                   ->addClass('text-center'),
             Column::make('id'),
-            Column::make('add your columns'),
+            Column::make('unit_name'),
             Column::make('created_at'),
             Column::make('updated_at'),
         ];

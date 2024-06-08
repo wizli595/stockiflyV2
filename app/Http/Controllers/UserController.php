@@ -103,11 +103,17 @@ class UserController extends Controller
     }
 
     public function destroy($id)
-    {
-        User::find($id)->delete();
-        return redirect()->route('users.index')
-                        ->with('success','User deleted successfully');
+{
+    $user = User::findOrFail($id);
+
+    if ($user->Customer()->exists()) {
+        return redirect()->back()->with('error', 'Cannot delete user because they have associated customers.');
     }
+
+    $user->delete();
+
+    return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+}
 
     // Role Controlling
     public function showChangeRolesPermissions(User $user){

@@ -44,7 +44,7 @@
                         </h6>
                     </div>
                 </div>
-
+ 
             </div>
             <div class="card-body">
                 {{ $dataTable->table() }}
@@ -89,16 +89,40 @@
                             <div class="mb-3">
                                 <label class="col-form-label" for="stock"> Stock </label>
                                 <input class="form-control" name="stock" id="stock" type="number" />
+                            </div> 
+
+                            <div class="mb-3">
+                                <label class="col-form-label" for="product_image"> Product image </label>
+                                <input class="form-control" name="product_image" id="product_image" type="file" />
                             </div>
+                            <select name="categorie_id">
+                                    @foreach ($categories as $categorie)
+                                    <option value="{{ $categorie->id }}">{{ $categorie->categorie_name }}</option>
+                                    @endforeach 
+                                </select>                 
+                            <select name="werhouse_id">
+                                    @foreach ($werhouses as $werhouse)
+                                    <option value="{{ $werhouse->id }}">{{ $werhouse->werhouse_name }}</option>
+                                    @endforeach 
+                                </select>                 
+                            <select name="brand_id">
+                                    @foreach ($brands as $brand)
+                                    <option value="{{ $brand->id }}">{{ $brand->brand_name }}</option>
+                                    @endforeach 
+                                </select>                 
+                            <select name="unite_id">
+                                    @foreach ($unites as $unite)
+                                    <option value="{{ $unite->id }}">{{ $unite->unit_name }}</option>
+                                    @endforeach 
+                                </select>                 
+
+
+                            <button class="btn btn-primary" type="submit">Add</button>
+                            </form>
 
                     </div>
                 </div>
 
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" type="submit">Add</button>
-                    </form>
-                </div>
 
             </div>
         </div>

@@ -50,7 +50,7 @@
         </div>
     </div>
     {{-- test the form --}}
-    @if ($errors->any())
+    @if ($errors->any()) 
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
@@ -71,7 +71,7 @@
                 </div>
                 <div class="modal-body">
 
-                    <form action="{{ route('customers.store') }}" method="POST">
+                    <form action="{{ route('werhouses.store') }}" method="POST">
                         @csrf
 
                         <div class="mb-3">

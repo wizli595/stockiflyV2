@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\UsersDataTable;
+use App\DataTables\SupplierDataTable;
 use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -26,14 +26,14 @@ class SupplierController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(UsersDataTable $dataTable)
+    public function index(SupplierDataTable $dataTable)
     {
-        $suppliers = Supplier::latest()->paginate(50);
+        $suppliers = Supplier::latest()->paginate(50);  
         $users = User::whereIn('id', $suppliers->pluck('user_id'))->get();
         return $dataTable->render("suppliers.index",compact('suppliers','users'));
     }
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource. 
      *
      * @return \Illuminate\Http\Response
      */
@@ -55,12 +55,12 @@ class SupplierController extends Controller
         'supplier_shop_name' => 'required',
         'name' => 'required',
         'email' => 'required|email|unique:users,email',
-        'password' =>'required|confirmed',
-        'role' => 'required',
-        'username' =>'required',
+        'password' =>'required',
+        
+        'username' =>'required', 
         'phone' =>'required',
         'avatar' =>'required',
-    ]);
+    ]); 
 
     try {
         // Créer l'utilisateur
@@ -68,7 +68,7 @@ class SupplierController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role' => $request->role,
+            'role' => "stock manager", 
             'username' => $request->username,
             'phone' => $request->phone,
             'avatar' => $request->avatar

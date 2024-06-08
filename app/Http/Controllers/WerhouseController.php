@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\UsersDataTable;
+use App\DataTables\WerhouseDataTable;
 use App\Models\Werhouse;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class WerhouseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(UsersDataTable $dataTable)
+    public function index(WerhouseDataTable $dataTable)
     {
         $werhouses=Werhouse::all();
         return $dataTable->render("werhouses.index",compact('werhouses'));
@@ -32,7 +33,7 @@ class WerhouseController extends Controller
         return view("werhouses.create"); 
     }
 
-    /**
+    /** 
      * Store a newly created resource in storage.
      */ 
     public function store(Request $request)
@@ -43,7 +44,7 @@ class WerhouseController extends Controller
             "werhouse_capacity" =>"required",
 
         ]);
-        Werhouse::create($request->all());
+        Werhouse::create($request->all()); 
         return redirect()->route("werhouses.index")->with("success","werhous create");
     }
 

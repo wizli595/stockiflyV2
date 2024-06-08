@@ -13,21 +13,25 @@ class Product extends Model
         "product_name",
         "product_code",
         "buying_price",
-        "selling_price",
-        "stock",
+        "selling_price", 
+        "stock", 
         "product_image",
+        "categorie_id" ,
+        "werhouse_id" ,
+        "brand_id" ,
+        "unite_id" ,
     ];
     public function categorie(){
-        return $this->hasOne(Categorie::class);
+        return $this->belongsTo(Categorie::class);
     }
     public function brand(){
-        return $this->hasOne(Brand::class);
+        return $this->belongsTo(Brand::class);
     }
     public function unite(){
-        return $this->hasOne(Unite::class);
+        return $this->belongsTo(Unite::class);
     }
     public function werhouse(){
-        return $this->hasOne(Werhouse::class);
+        return $this->belongsTo(Werhouse::class);
     }
     public function purchaseDetail(){
         return $this->hasMany(PurchaseDetail::class);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\UniteDataTable;
 use App\DataTables\UsersDataTable;
 use App\Models\Unite;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class UniteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(UsersDataTable $dataTable)
+    public function index(UniteDataTable $dataTable)
     {
         $unites=Unite::all();
         return $dataTable->render("unites.index",compact('unites'));
@@ -38,7 +39,7 @@ class UniteController extends Controller
     public function store(Request $request)
     {
         request()->validate([
-            "unite_name" =>"required",
+            "unit_name" =>"required",
         ]);
         
         Unite::create($request->all());

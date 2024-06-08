@@ -36,7 +36,7 @@
 
                 <div class="col-auto d-none d-sm-block">
                     <h6 class="text-uppercase text-600">
-                        <!-- Add Customer Buuton -->
+                        <!-- Add Supplier Buuton -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#editModal">Add
                         </button>
@@ -61,30 +61,34 @@
     @endif
 
 
-    <!-- Add Customer  modal -->
+    <!-- Add Supplier  modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Add Customer </h5>
+                    <h5 class="modal-title" id="editModalLabel">Add Supplier </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 
                     <form action="{{ route('suppliers.store') }}" method="POST">
                         @csrf
-
-                        <div class="mb-3">
-                            <label class="col-form-label" for="name">Name </label>
+                        
+                        <div class="mb-3"> 
+                            <label class="col-form-label" for="name">Supplier Name</label>
                             <input class="form-control" name="name" id="name" type="text" />
+                        </div>
+                        <div class="mb-3"> 
+                            <label class="col-form-label" for="username">Supplier User Name</label>
+                            <input class="form-control" name="username" id="username" type="text" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="col-form-label" for="name"> Supplier Shop Name </label>
+                            <input class="form-control" name="supplier_shop_name" id="name" type="text" />
                         </div>
  
 
-                        <div class="mb-3">
-                            <label class="col-form-label" for="username">User Name</label>
-                            <input class="form-control" name="username" id="username" type="text" />
-                        </div>
-
+ 
                         <div class="mb-3">
                             <label class="col-form-label" for="phone"> Phone </label>
                             <input class="form-control" name="phone" id="phone" type="tel" />
@@ -99,11 +103,12 @@
                             <label class="col-form-label" for="password">Password </label>
                             <input class="form-control" name="password" id="password" type="password" />
                         </div>
+                        
+                        
+                        <input class="form-control" name="avatar" type="text" value="image.png" hidden />
 
-                        <div class="mb-3">
-                            <label for="adresse_name">Adresse</label><br>
-                            <textarea id="adresse_name" name='adresse_name' rows="3" cols="30"></textarea>
-                        </div>
+
+
                         <div class="mb-3">
                             <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
                             <button class="btn btn-primary" type="submit">Add</button>
@@ -124,7 +129,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="editModalLabel">Update Customer </h5>
+                            <h5 class="modal-title" id="editModalLabel">Update Supplier </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -176,7 +181,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="showModalLabel">Update Customer </h5>
+                            <h5 class="modal-title" id="showModalLabel">Update Supplier </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -191,7 +196,7 @@
                                             <a class="dropdown-item text-danger" href="#">Delete user</a>
                                         </div>
                                         <div class="col-auto d-none d-sm-block">
-                                            <h6 class="text-uppercase text-600">Customer<span class="fas fa-user ms-2"></span>
+                                            <h6 class="text-uppercase text-600">Supplier<span class="fas fa-user ms-2"></span>
                                             </h6>
                                         </div>
                                     </div>
@@ -201,7 +206,7 @@
                                     <div class="d-flex"><span class="fas fa-user text-success me-2"
                                             data-fa-transform="down-5"></span>
                                         <div class="flex-1">
-                                            <p class="mb-0">Customer was created</p>
+                                            <p class="mb-0">Supplier was created</p>
                                             <p class="mb-0 fs--1 text-600">
                                                 {{-- {{ $suppliers->created_at }} --}} 2024-12-25...
                                             </p>

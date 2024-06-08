@@ -26,7 +26,7 @@ class CustomerController extends Controller
     }
     /**
      * Display a listing of the resource.
-     *
+     * 
      * @return \Illuminate\View\View
      */
     public function index(CustomerDataTable $dataTable)
@@ -81,13 +81,13 @@ class CustomerController extends Controller
             $adresse = Adresse::create([
                 'adresse_name' =>$request->adresse_name
             ]);
-            $customer = new Customer();
+            $customer = new Customer(); 
             $customer->user_id = $user->id;
             $customer->adresse_id = $adresse->id;
             $customer->save();
 
             // Valider la transaction
-            DB::commit();
+            DB::commit(); 
 
 
             return redirect()->route('customers.index')->with('success', 'Customer created successfully!');
@@ -107,7 +107,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        return view('customers.show', compact('customer'));
+        return view('customers.show', compact('customer')); 
     }
 
     /**

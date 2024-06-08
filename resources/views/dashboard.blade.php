@@ -8,41 +8,18 @@
 @if (auth()->user()->can('brand-create'))
 
     @section('content')
-        {{-- <div>  <livewire:user-chart/> </div> --}}
-        
-        <div class="mb-3 card">
-            <div class="card-header row">
-                <div class="col">
-                    Charts
-                </div>
-                <div class="col">
-                    Users count : {{ $users_count }}
-                </div>
-            </div> 
-            <div class="card-body border-top row ">
-                <div class="col">
-                    <div class="echart-doughnut-rounded-chart" style="min-height: 320px;" data-echart-responsive="true"></div>
-                </div>
-                <div class="col">
-                    <div class="echart-doughnut-rounded-chart" style="min-height: 320px;" data-echart-responsive="true"></div>
-                </div>
-                <div class="col">
-                    <div class="echart-doughnut-rounded-chart" style="min-height: 320px;" data-echart-responsive="true"></div>
-                </div>
-
-            </div>
-        </div>
-
-
 
         <div class="container">
             <div class="card">
-                <div class="card-header">Manage Users</div>
+                <div class="card-header">Manage Users </div>
                 <div class="card-body">
-                    {{ $dataTable->table() }}
+                    {{ $dataTable->table() }}  
                 </div>
             </div>
         </div>
+
+        
+
 
         <div class="modal fade" id="error-modal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">
@@ -98,9 +75,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        @endsection
-
+        </div>
+        
+        
+        
+        
+            
+@endsection
 @endif
 
 @push('scripts')

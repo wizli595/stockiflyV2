@@ -20,20 +20,69 @@ class UsersDataTable extends DataTable
      * @param QueryBuilder $query Results from query() method.
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
-    {
-        return (new EloquentDataTable($query))
+{
+    return (new EloquentDataTable($query))
         ->addColumn('action', function ($user) {
-            $editUrl = route('users.edit', $user->id);
-            $showUrl = route('users.show', $user->id);
-            if (!$user->can("brand-create")) {
-                return "<button class='btn btn-primary' type='button' data-bs-toggle='modal'
-                data-bs-target='#error-modal'> Add.Customer
-                    </button>
-                        <a href='{$showUrl}' class='btn btn-xs btn-success'>View</a>";
-                }
+            $userId = $user->id;
+            $userEmail = $user->email;
+            $showUserCreatedAt = $user->created_at;
+
+            return '
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showModal-'.$userId.'">Show</button>
+
+                <div class="modal fade" id="showModal-'.$userId.'" tabindex="-1" aria-labelledby="showModalLabel-'.$userId.'" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="showModalLabel-'.$userId.'">Show User </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3 card">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="mb-2">
+                                                    User Name :   '. $user->name .'
+                                                </h5>
+                                                <h5 class="mb-2">
+                                                    Email (<a href="mailto:'. $userEmail .'">'. $userEmail .'</a>)
+                                                </h5>
+                                                <h5 class="mb-2">
+                                                    Phone : '. $user->phone .'
+                                                </h5>
+                                                
+                                                
+                                            </div>
+                                            <div class="col-auto d-none d-sm-block">
+                                                <h6 class="text-uppercase text-600">User<span class="fas fa-user ms-2"></span>
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <div class="card-body border-top">
+                                        <div class="d-flex"><span class="fas fa-user text-success me-2" data-fa-transform="down-5"></span>
+                                            <div class="flex-1">
+                                                <p class="mb-0">User was created</p>
+                                                <p class="mb-0 fs--1 text-600">
+                                                   '. $showUserCreatedAt .'
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+                ';
         })
-            ->setRowId('id');
-    }
+        ->setRowId('id');
+}
+
 
     /**
      * Get the query source of dataTable.

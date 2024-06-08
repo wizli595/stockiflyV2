@@ -38,7 +38,7 @@ class AdminSeeder extends Seeder
             'categorie-create',
             'categorie-edit',
             'categorie-delete',
-            'brand-list',
+            'brand-list', 
             'brand-create',
             'brand-edit',
             'brand-delete',

@@ -67,8 +67,8 @@
                             @csrf
 
                             <div class="mb-3">
-                                <label class="col-form-label" for="unite_name">Unite Name </label>
-                                <input class="form-control" name="unite_name" id="unite_name" type="text" />
+                                <label class="col-form-label" for="unit_name">Unite Name </label>
+                                <input class="form-control" name="unit_name" id="unit_name" type="text" />
                             </div>
                             
                             <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
