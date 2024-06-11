@@ -9,7 +9,7 @@ use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
+use Yajra\DataTables\Html\Editor\Fields; 
 use Yajra\DataTables\Services\DataTable;
 
 class UsersDataTable extends DataTable
@@ -29,7 +29,6 @@ class UsersDataTable extends DataTable
 
             return '
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showModal-'.$userId.'">Show</button>
-
                 <div class="modal fade" id="showModal-'.$userId.'" tabindex="-1" aria-labelledby="showModalLabel-'.$userId.'" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -68,6 +67,7 @@ class UsersDataTable extends DataTable
                                                 <p class="mb-0 fs--1 text-600">
                                                    '. $showUserCreatedAt .'
                                                 </p>
+                                                
                                             </div>
                                         </div>
                                     </div>

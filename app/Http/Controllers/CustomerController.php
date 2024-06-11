@@ -35,7 +35,7 @@ class CustomerController extends Controller
         // $users = $customers->pluck('user')->unique();
         $users = User::whereIn('id', $customers->pluck('user_id'))->get();
         return $dataTable->render('customers.index',compact('customers','users'));
-    }
+    } 
 
     /**
      * Show the form for creating a new resource.

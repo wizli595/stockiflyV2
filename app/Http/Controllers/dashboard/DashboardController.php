@@ -7,14 +7,15 @@ use App\DataTables\UsersDataTable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function index(UsersDataTable $usersDataTable)
+    public function index(UsersDataTable $usersDataTable) 
     {
-        $users_count = User::count() ;
+        $user = Auth()->user() ;
         
-        return $usersDataTable->render("dashboard", compact('users_count')); 
+        return $usersDataTable->render("dashboard", compact('user')); 
 
     }
 }

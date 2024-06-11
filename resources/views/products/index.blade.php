@@ -1,7 +1,45 @@
 <x-app-layout>
 
+    @section('head')
+    <style>
+        .notification {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .notification button {
+            margin-left: 10px;
+            background-color: white;
+            color: red;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+        }
+    </style>
+        
+    @endsection
+
     @section('content')
-        <!-- Head content -->
+
+    {{-- @if($notifications->count() > 0)
+     <div class="notification">
+        @foreach($notifications as $notification)
+            <p>
+                {{ $notification->data['message'] }}
+                <form action="{{ route('products.markAsRead', $notification->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    <button type="submit">Mark as Read</button>
+                </form>
+            </p>
+        @endforeach
+      </div>
+    @endif --}}
+
         <div class="mb-3 card">
             <div class="card-header">
                 <div class="row">
@@ -42,6 +80,16 @@
                             </button>
                             </span>
                         </h6>
+
+                        <!-- Notification dropdown in Blade -->
+                        <ul class="dropdown-menu">
+                            @foreach(Auth::user()->unreadNotifications as $notification)
+                            <li>
+                                {{ $notification->data['product_name'] }} stock is low: {{ $notification->data['stock'] }} units left.
+                     </li>
+    @endforeach
+</ul>
+
                     </div>
                 </div>
  
@@ -62,6 +110,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        
                         <form action="{{ route('products.store') }}" method="POST">
                             @csrf
 
@@ -95,30 +144,34 @@
                                 <label class="col-form-label" for="product_image"> Product image </label>
                                 <input class="form-control" name="product_image" id="product_image" type="file" />
                             </div>
+                            
                             <select name="categorie_id">
                                     @foreach ($categories as $categorie)
                                     <option value="{{ $categorie->id }}">{{ $categorie->categorie_name }}</option>
                                     @endforeach 
-                                </select>                 
+                            </select>                 
+                            
                             <select name="werhouse_id">
                                     @foreach ($werhouses as $werhouse)
                                     <option value="{{ $werhouse->id }}">{{ $werhouse->werhouse_name }}</option>
                                     @endforeach 
-                                </select>                 
+                            </select>         
+
                             <select name="brand_id">
                                     @foreach ($brands as $brand)
                                     <option value="{{ $brand->id }}">{{ $brand->brand_name }}</option>
                                     @endforeach 
-                                </select>                 
+                            </select>  
+
                             <select name="unite_id">
                                     @foreach ($unites as $unite)
                                     <option value="{{ $unite->id }}">{{ $unite->unit_name }}</option>
                                     @endforeach 
-                                </select>                 
+                            </select>                 
 
 
                             <button class="btn btn-primary" type="submit">Add</button>
-                            </form>
+                        </form>
 
                     </div>
                 </div>

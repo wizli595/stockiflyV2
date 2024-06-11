@@ -14,7 +14,6 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -47,14 +46,20 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'role' => RoleEnum::class
+        'role' => RoleEnum::class 
     ];
     public function Customer()
     {
         return $this->hasMany(Customer::class);
     }
-    public function Supplier()
+    public function Supplier() 
     {
         return $this->hasMany(Supplier::class);
     }
+
+    public function isStockManager()
+    {
+        return $this->role === 'stock manager';
+    }
+    
 }

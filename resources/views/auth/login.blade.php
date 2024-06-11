@@ -78,6 +78,13 @@
             userLinkRTL.setAttribute('disabled', true);
         }
     </script>
+     <style>
+        .aic{
+            height: 100vh;
+            align-items: center
+        }
+    </style>
+
 
 </head>
 
@@ -85,7 +92,7 @@
 <body>
 
     <div class="container mt-50 ">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center aic">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">{{ __('Login') }}</div>

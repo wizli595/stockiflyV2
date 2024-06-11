@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\Categorie;
 use App\Models\Product;
 use App\Models\Unite;
+use App\Models\User;
 use App\Models\Werhouse;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,7 @@ class ProductController extends Controller
      * Display a listing of the resource.
      */
     public function index(ProductDataTable $dataTable)
-    {
+    { 
         $products=Product::all();
         $categories=Categorie::all();
         $werhouses=Werhouse::all();
@@ -77,7 +78,13 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view("products.edit",compact("product"));
+        $product=$product ; 
+        $categories=Categorie::all();
+        $werhouses=Werhouse::all();
+        $brands=Brand::all();
+        $unites=Unite::all();
+
+        return view("products.edit",compact('product','categories','werhouses','brands','unites'));
     }
 
     /**

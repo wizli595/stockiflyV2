@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    <!-- Scripts -->
+    <!-- Scripts --> 
     {{-- @livewireStyles --}}
 
     <!-- ===============================================-->
@@ -111,6 +111,7 @@
                             document.querySelector('.navbar-vertical').classList.add(`navbar-${navbarStyle}`);
                         }
                     </script>
+
                     <div class="d-flex align-items-center">
                         <div class="toggle-icon-wrapper">
                             <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle"
@@ -140,6 +141,7 @@
                                         <span class="nav-link-text ps-1">dashboard</span>
                                     </div>
                                 </a>
+                               
 
                                 <li class="nav-item"> 
                                     <!-- parent pages-->
@@ -154,14 +156,13 @@
 
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ route('customers.index') }}" data-bs-toggle=""
-                                                aria-expanded="false">
-                                                <div class="d-flex align-items-center"><span
-                                                        class="nav-link-text ps-1">custmers</span>
-                                                </div>
+                                              aria-expanded="false">
+                                               <div class="d-flex align-items-center">
+                                                 <span class="nav-link-text ps-1">custmers</span>
+                                               </div>
                                             </a>
-                                            <!-- more inner pages-->
-                                        </li>
-
+                                        </li>     
+                                        
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ route('suppliers.index') }}"
                                                 data-bs-toggle="" aria-expanded="false">
@@ -307,13 +308,13 @@
                         <ul class="navbar-nav align-items-center d-none d-lg-block">
 
                             <li class="nav-item">
-                                <div class="search-box" data-list='{"valueNames":["title"]} '>
+                                {{-- <div class="search-box" data-list='{"valueNames":["title"]} '>
                                     <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
                                         <input class="form-control search-input fuzzy-search" type="search"
                                             placeholder="Search..." aria-label="Search" />
                                         <span class="fas fa-search search-box-icon"></span>
                                     </form>
-                                </div>
+                                </div> --}}
                             </li>
                             
                         </ul>
@@ -325,7 +326,7 @@
                                 <a class="nav-link pe-0 ps-2" id="navbarDropdownUser" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <div>
-                                        FR
+                                        ENG
                                     </div>
                                 </a>
                                 <div class="py-0 dropdown-menu dropdown-caret dropdown-menu-end"

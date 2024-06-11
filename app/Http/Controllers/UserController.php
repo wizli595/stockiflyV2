@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 
 
-class UserController extends Controller
+class UserController extends Controller 
 {
     function __construct()
     {
@@ -53,7 +53,7 @@ class UserController extends Controller
 
         $user = User::create($input);
         $user->assignRole($request->input('role'));
-
+ 
         return redirect()->route('users.index')
                         ->with('success','User created successfully');
     }
@@ -70,7 +70,7 @@ class UserController extends Controller
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
 
-        return view('users.edit',compact('user','roles','userRole'));
+        return view('users.edit',compact('user','roles','userRole')); 
     }
 
     public function update(Request $request, $id)
@@ -80,7 +80,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'same:confirm-password',
             'role' => 'required',
-            'username' =>'required',
+            'username' =>'required', 
             'phone' =>'required',
             'avatar' =>'required'
         ]);
@@ -108,7 +108,7 @@ class UserController extends Controller
 
     if ($user->Customer()->exists()) {
         return redirect()->back()->with('error', 'Cannot delete user because they have associated customers.');
-    }
+    } 
 
     $user->delete();
 

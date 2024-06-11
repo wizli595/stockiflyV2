@@ -57,7 +57,7 @@
             <li>{{ $error }}</li>
             @endforeach
         </ul>
-    </div>
+    </div> 
     @endif
 
 
@@ -116,9 +116,11 @@
 
         </div>
     </div>
-
-    <!-- Edit  modal
+        
+    {{-- // Edit  modal --}}
+          
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+            
             <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -167,7 +169,8 @@
 
                 </div>
             </div>
-             -->
+
+
 
     <!-- Show  modal
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showModal">Show</button>

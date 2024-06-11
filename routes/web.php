@@ -13,8 +13,11 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UniteController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WerhouseController;
+use App\Mail\StockLowMail;
+use App\Models\Product;
 use App\Models\PurchaseDetail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -61,11 +64,26 @@ Route::middleware('auth')->group(function () {
     Route::resource('brands', BrandController::class);
     Route::resource('werhouses', WerhouseController::class);
     Route::resource('unites', UniteController::class);
-
-
+    
+    // Route::post('products/{id}/notificationAsRead', [ProductController::class, 'markAsRead'])->name('products.markAsRead');
+    
 });
 
 require __DIR__.'/auth.php';
 
 // Auth::routes();
 
+
+
+// Test Send Email
+
+// Route::get('/test-email', function () {
+//     $product = Product::first(); 
+//     $user = Auth::user(); 
+
+//     if ($user) {
+//         Mail::to($user->email)->send(new StockLowMail($product));
+//         return 'Email sent to ' . $user->email;
+//     }
+//     return 'No authenticated user';
+// });

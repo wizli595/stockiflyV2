@@ -1,10 +1,13 @@
 <?php
-
 namespace App\Models;
 
+use App\Mail\StockLowMail;
+use App\Notifications\StockLowNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class Product extends Model
 {
@@ -13,11 +16,11 @@ class Product extends Model
         "product_name",
         "product_code",
         "buying_price",
-        "selling_price", 
+        "selling_price",  
         "stock", 
         "product_image",
         "categorie_id" ,
-        "werhouse_id" ,
+        "werhouse_id" , 
         "brand_id" ,
         "unite_id" ,
     ];
@@ -36,4 +39,23 @@ class Product extends Model
     public function purchaseDetail(){
         return $this->hasMany(PurchaseDetail::class);
     }
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::updated(function ($product) {
+            if ($product->stock <= 5) {
+                $stockManagers = User::where('role', 'stock manager')->get();
+                
+                foreach ($stockManagers as $manager) {
+                    Log::info('Sending email and notification to stock manager', ['email' => $manager->email]);
+                    Mail::to($manager->email)->send(new StockLowMail($product));
+                    $manager->notify(new StockLowNotification($product)); 
+                }
+            }
+        });
+    }
+
 }
